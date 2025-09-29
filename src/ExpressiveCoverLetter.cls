@@ -24,7 +24,7 @@
     firstname,middleinitial,lastname,
     email,
     phone,  % Must be in XXX-XXX-XXXX format to become a valid link
-    github,
+    pp,
     linkedin,
     city,  % Ignored if `state` is not also provided
     state,

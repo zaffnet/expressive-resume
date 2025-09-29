@@ -1,74 +1,259 @@
 \documentclass{ExpressiveResume}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage[skins]{tcolorbox}
+\usepackage{pifont}
 
-% ----- Resume -----
+% \usepackage{background}
+% \backgroundsetup{%
+%   scale=1, angle=0, opacity=1,
+%   contents={%
+%     \begin{tikzpicture}[remember picture, overlay]
+%       \pgfmathsetmacro{\xmax}{8.5}
+%       \pgfmathsetmacro{\ymax}{11}
+%       \foreach \x in {0,0.05,...,8.5} {
+%         \draw[gray!30, thin] ([xshift=\x in]current page.south west) -- ([xshift=\x in]current page.north west);
+%       }
+%       \foreach \y in {0,0.05,...,13} {
+%         \draw[gray!30, thin] ([yshift=\y in]current page.south west) -- ([yshift=\y in]current page.south east);
+%       }
+%     \end{tikzpicture}
+%   }
+% }
+% \usepackage{showframe}
+
+% Use the fontspec package for modern font management
+\usepackage{fontspec}
+\usepackage{unicode-math} % For modern, scalable math fonts
+
+% Use the EB Garamond font from your system and define all required shapes
+\setmainfont{EB Garamond}[
+  UprightFont      = {* Regular},
+  ItalicFont       = {* Italic},
+  BoldFont         = {* SemiBold},
+  BoldItalicFont   = {* SemiBold Italic},
+  % Correctly define the semibold 'sb' series using FontFace
+  FontFace         = {sb}{n}{ Font = {* SemiBold} },
+  FontFace         = {sb}{it}{ Font = {* SemiBold Italic} }
+]
+
+% Set a matching, scalable math font to avoid size substitution warnings
+\setmathfont{Garamond-Math}
+
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.0}
+
+\newcommand{\ExternalLink}{\textbf{%
+  \tikz[x=1.2ex, y=1.2ex, baseline=-0.05ex]{%
+    \begin{scope}[x=1ex, y=1ex]
+        \clip (-0.1,-0.1)
+          --++ (-0, 1.2)
+          --++ (0.6, 0)
+          --++ (0, -0.6)
+          --++ (0.6, 0)
+          --++ (0, -1);
+        \path[draw,
+          line width = 1,
+          rounded corners=0.75]
+          (0,0) rectangle (1,1);
+    \end{scope}
+    \path[draw, line width = 1] (0.5, 0.5)
+      -- (1, 1);
+    \path[draw, line width = 1] (0.6, 1)
+      -- (1, 1) -- (1, 0.6);
+    }
+  }}
+
+\usepackage{fancyhdr}
+\usepackage[backend=biber,style=ieee,giveninits=false,maxbibnames=4]{biblatex}
+\addbibresource{publications.bib}
+
+\renewcommand*{\bibfont}{\normaltextfont}
+
+\DeclareFieldFormat{year}{\textbf{#1}}
+\DeclareNameFormat{author}{%
+  \ifboolexpr{
+    test {\ifdefstring{\namepartgiven}{Z.}}
+    and
+    test {\ifdefstring{\namepartfamily}{Mahmood}}
+  }
+    {\mkbibbold{\namepartgiven\space\namepartfamily}}
+    {\namepartgiven\space\namepartfamily}%
+  \usebibmacro{name:andothers}%
+}
+
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]{title}{#1}
+
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{begentry}%
+  \iffieldundef{url}
+    {%
+      %
+\printfield{title}\addperiod\space
+      \space\printfield{booktitle}\addcomma\space
+      \printfield{year}\addperiod
+    }{%
+      \href{\thefield{url}}{%
+        \parbox{\linewidth}{%
+          % \printnames{author}\addperiod\space
+          \printfield{title}\addperiod\space
+          \space\printfield{booktitle}\addcomma\space
+          \printfield{year}\addperiod\space \tech{\ExternalLink}
+        }%
+      }%
+    }%
+  % \usebibmacro{finentry}%
+}
+
+\hypersetup{
+    pdftitle={Zafarullah Mahmood - Resume},
+    pdfauthor={Zafarullah Mahmood},
+    pdfcreator={Zafarullah Mahmood},
+    pdfsubject={Resume for Natural Language Processing Engineer, AI Researcher · Machine Learning Engineer, Software Engineer and Data Scientist Positions},
+    pdfkeywords={natural language processing, machine learning, large language model, transformer architecture, generative artificial intelligence, retrieval augmented generation, parameter efficient fine tuning, reinforcement learning from human feedback, huggingface transformer, openai application programming interface, langchain framework, llamaindex framework, haystack framework, chatbot development, dialogue system, intent matching, fallback mechanism, text classification, sentiment analysis, speech recognition, pronunciation modeling, grapheme to phoneme modeling, text preprocessing, text completion, contextual biasing, decoder probability adjustment, dynamic matching, motivational interviewing, automatic annotation, punctuation restoration, casing restoration, de-anonymization, language model training, inference optimization, data ingestion, retention policy, benchmarking pipeline, model deployment, container orchestration, kubernetes orchestration, docker containerization, kubeflow pipeline, amazon web services, redis database, postgresql database, google firestore, python programming, pytorch framework, scikit learn library, keras framework, fastai library, spacy library, flair library, nemo toolkit, dspython framework, bilingual support, customer service analysis, insurance assessment, report generation, data science, mathematical modeling, algorithmic fairness, batch normalization, batch renormalization, corpus pruning, tree data structure, hash table, computer engineering, c plus plus programming, c programming, sanic, angular, postgresql, pytest, github actions, circleci, latex, acl, emnlp, neurips, camh, centre for addiction and mental Health, ai for health, ai for mental health, ai engineer, ml engineer, research engineer, llm, gcp, rag, information retrieval, supervised learning, prompt engineering, optuna, active learning, backend engineering, knowledge graph, few-shot learning, semantic search, question answering, entity linking, nosql, elastic container service, pinecone, asyncio, named entity recognition, automatic speech recognition, conversational ai, semi-supervised learning, model evaluation, zero-shot learning, sigmorphon, hyperopt, mypy, computational linguistics, summarization, unsupervised learning, sql, cloud engineering, faiss, google cloud platform, milvus, vector database, virtual assistant, software engineering, topic modeling, weaviate, icassp, centre for addiction and mental health, multi-agent system, information extraction
+}
+}
+
+
+\newcommand{\mainBullet}{\hspace{12pt}\color{blue}\fontsize{11}{13.2}\selectfont{\ding{70}}}
+
 \begin{document}
 
 % ----- Name + Contact Information -----
 \resumeheader[
-    firstname=John,
-    middleinitial=N,
-    lastname=Doe,
-    email=john.doe@example.com,
-    % phone=123-456-7890,
-    linkedin=johndoe,
-    github=johndoe,
-    % city=Town,
-    % state=State,
-    qrcode=./images/qr.png
+    firstname=Zafarullah,
+    lastname=Mahmood,
+    email=zafar@zafarmahmood.com,
+    phone=+1 437-223-7536,
+    linkedin=zaffnet,
+    github=zaffnet,
+    % kaggle=fizzbuzz,
+    webpage=zafarmahmood.com,
+    city=Toronto,
+    state=ON,
 ]
 
-\objective{A software engineering graduate with 2 years of work
-    experience at various internships seeking opportunities to develop
-    web/mobile applications for Company XYZ.}
+\thispagestyle{plain}
 
-% ----- Work Experience -----
-\section{Work Experience}
+\vspace{-5pt}
+\section{Skills}
+\achievementSkill{
+\tech{Technical}: Python (Fluent), C/C++ (Familiar), JavaScript (Prior experience), Flask, Sanic, SQLAlchemy, Alembic, Angular
+}\vspace{-6pt}
+\achievementSkill{
+\tech{Deep Learning \& NLP}: PyTorch, NVIDIA NeMo, HuggingFace (transformers, PEFT), spaCy
+}\vspace{-6pt}
+\achievementSkill{
+\tech{Generative AI}: LangChain, LangGraph, LlamaIndex, RAG Evaluation (RAGAs), Model Serving (vLLM)
+}\vspace{-6pt}
+\achievementSkill{
+\tech{MLOps \& Cloud}: Docker, Kubernetes, Elastic Container Services, Kubeflow, AWS (Bedrock, SageMaker), GCP (Vertex AI)
+}\vspace{-6pt}
+\achievementSkill{
+\tech{Databases \& Vector Stores}: BigQuery, PostgreSQL (pgvector), Firestore, Redis, ChromaDB, FAISS
+}\vspace{-6pt}
+    \vspace{5pt}
 
-\experience{Radiant Software Systems}{%
-    \role{Software Engineer}{2021 - 2024}{
-        \achievement{
-
-            Developed a mobile app in \tech{React Native} that was
-            downloaded 100k times on Google Play.
-
-        }
-    }
-    \role{Summer Intern}{2021}{
-        \achievement{
-
-            Collaborated in an \tech{Agile/Scrum} team of 8 engineers to
-            deliver new features every 2 weeks.
-
-        }
-    }
-}
-
-% ----- Technical Projects -----
-\section{Technical Projects}
-
-\project{Expressive Resume}{2021-2024}{
-
-    \achievement{
-        Created a \tech{\LaTeX} class
-        that enables anyone to quickly
-        create a beautiful resume
-        and cover letter.
-    }
-
-}
-
-% ----- Education -----
 \section{Education}
 
-\degree{B.S. Software Engineering \honors{Summa Cum Laude}}{Super Duper University}{2022}{
-    \achievement{Ranked \#15 out of 463 students}
+\experience{
+    \role{{\mainBullet} Master of Applied Science in Computer Engineering at \tech{the University of Toronto}}{}{2023 -- 2025}{
+        \achievement{
+            \textbf{Thesis}: A Fully Generative Counsellor Chatbot for Smoking Cessation and LLM-Based Synthetic Smokers \hspace{1pt}\textbar\hspace{1pt} \textbf{GPA}: 4.0/4.0
+        }
+        
+        \achievement{
+            Deployed a multi-agent therapeutic chatbot \cite{mahmood2025fullygenerativemotivationalinterviewing} on \tech{AWS ECS}, which helped smokers increase their confidence in quitting smoking by 1.7 (0-10 scale). Improved chatbot's therapeutic quality by 26\% by implementing \tech{ReAct} for counsellor behaviour selection. Reduced SLOC by $\sim$60\% by re-implementing the chatbot system using \tech{LangChain LCEL}. Gained experience in \tech{ChromaDB}.
+        }
+        \achievement{
+            Devised a validation framework for high-fidelity persona installation. Tested the framework's viability by installing human smoker attributes into LLM-based  synthetic smoker ``doppelgängers''.
+        }
+    }
 }
 
-% ----- Awards -----
+\experience{
+    \role{{\mainBullet} Bachelor of Technology in Computer Engineering at \tech{Jamia Millia Islamia, New Delhi}}{}{2014 -- 2018}{
+        \achievement{
+           \textbf{Focus}: Natural Language Processing \hspace{1pt}\textbar\hspace{1pt} \textbf{Internship}: Indian Space Research Organisation \hspace{1pt}\textbar\hspace{1pt} \textbf{CGPA: 8.2/10} 
+        }
+    }
+}
+
+\section{Work Experience}
+\experience{
+    \role{{\mainBullet} Natural Language Processing (NLP) Engineer at \tech{Dialpad Canada Inc.}}{}{Apr 2019 -- Aug 2023}{     
+        
+        \achievement{
+            Deployed a real-time Spanish-English bilingual sentiment classification model by fine-tuning an English-only model. Achieved target F1 on the Spanish testset without performance loss on original English testset. Used \tech{transformers} and \tech{spaCy}.
+        }
+        \achievement{
+            Reduced real-time inference latency by 4\% by replacing a sequential punctuation and casing pipeline with a multi-classification-head \tech{BERT} model. Identified and fixed performance bottlenecks in model's custom tokenizer using \tech{py-spy} and \tech{scalene}.
+        }
+
+        \achievement{
+            Learned \tech{Angular} to develop an internal text-to-speech annotation platform. Adopted the iterative co-design paradigm and improved annotator efficiency by 12\% by adding features like hotkeys, smart text completion, and dynamic keyword highlighting.
+            Used \tech{Sanic} and \tech{PostgreSQL} for the backend, connected with cloud data sources and sinks, including \tech{BigQuery} and \tech{Cloud Storage} and deployed the application on \tech{Google Kubernetes Engine Deployment}.
+        }
+        \achievement{
+            Built a tool to create synthetic speech data from a list of \emph{keywords}: used \tech{Beautiful Soup} for web scraping, \tech{spaCy} for named entity recognition and sentence creation, and \tech{Coqui TTS} to generate speech from sentences. The synthetic dataset was used to train a keyword boosting algorithm \cite{li2023ngramboostingimprovingcontextual} and helped improve keyword recognition accuracy on a real test set by 26\% relative.
+        }
+        
+        \achievement{
+            Built a \tech{Kubeflow} pipeline to automate the generation and verification of pronunciations of newly coined words (e.g., \emph{COVID-19}). The pipeline added $\sim$10,000 words in a year and helped the team beat a benchmark on pronunciation generation \cite{gautam-etal-2021-avengers}. 
+            
+          
+        }
+    }
+}
+
+\experience{
+    \role{{\mainBullet} Data Scientist at \tech{Exzeo Software, India}}{}{Jun 2018 -- Mar 2019}{
+        \achievement{
+        Built a text-based, omni-channel conversational agent using \tech{Google DialogFlow} to help customers file insurance claims.
+        }
+        
+    }
+}
+
+\section{Publications}
+\normaltextfont{
+\printbibliography[heading=none]
+}
+
+\vspace{0.27em}
+
+\section{Projects}
+    \project{\href{https://www.eecg.utoronto.ca/~jayar/ece1786.2023/download/autoannomi.pdf}{{\mainBullet} AutoAnnoMI: Automating Annotations of MI Conversations using LLMs \tech{\ExternalLink}}}
+    {2023}
+    {\achievement{Built an LLM-based tool to label utterances in counselling conversations. Incorporated chain-of-thought reasoning and few-shot examples leading to a $\sim$12\% accuracy improvement over baseline.}
+    }
+    
+    \project
+    {\href{https://zaffnet.github.io/batch-normalization}{{\mainBullet} Benchmarking Batch Renormalization \tech{\ExternalLink}}}{2017}
+    {\achievement{Implemented \texttt{BatchReNorm1d} module in \tech{PyTorch} and benchmarked its performance on image recognition datasets.}}
+
 \section{Awards}
 
-\award{Employee of the Month}{Radiant Software Systems}{2023}{
-    \achievement{Did some amazing stuff that really benefitted the company}
+\project
+{{\mainBullet} Edward S. Rogers Sr. Graduate Scholarship, University of Toronto}{2024}
+{    \achievement{Received CAD 20,000 in recognition of outstanding academic accomplishments during Master's studies. }
+}
+
+
+\project
+    {\href{https://www.kaggle.com/c/donorschoose-application-screening/discussion/55396}{{\mainBullet} Best Kernel Award, Kaggle}}{2018}
+        {\achievement{\href{https://www.kaggle.com/c/donorschoose-application-screening/discussion/55396}{Won Best Kernel Award among 80 kernels in DonorsChoose.org Application Screening Challenge.}}
+    }
+
+\fancypagestyle{plain}{%
+    \fancyhf{}%
+    \renewcommand{\headrulewidth}{0pt}%
+    \renewcommand{\footrulewidth}{0pt}%
+    \fancyfoot[L]{%
+    \vspace*{-30pt}% Adjust this value as needed
+    \parbox{\textwidth}{\fontsize{11}{13.2}\selectfont{
+      $^\dagger$ Eligible to work in Canada without sponsorship.}}%
+    }%
 }
 
 \end{document}
