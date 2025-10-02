@@ -24,6 +24,7 @@
 
 % Use the fontspec package for modern font management
 \usepackage{fontspec}
+\usepackage{microtype}
 \usepackage{unicode-math} % For modern, scalable math fonts
 
 % Use the EB Garamond font from your system and define all required shapes
@@ -32,6 +33,8 @@
   ItalicFont       = {* Italic},
   BoldFont         = {* SemiBold},
   BoldItalicFont   = {* SemiBold Italic},
+  Renderer=HarfBuzz,
+  Kerning=On,
   % Correctly define the semibold 'sb' series using FontFace
   FontFace         = {sb}{n}{ Font = {* SemiBold} },
   FontFace         = {sb}{it}{ Font = {* SemiBold Italic} }
