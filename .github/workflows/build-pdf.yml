@@ -37,16 +37,18 @@ jobs:
           ./setup.sh
           test -f src/resume.pdf
 
-      - name: Compute branch-safe name
+      - name: Compute artifact metadata
         id: meta
         run: |
           BR="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
           SAFE="${BR//\//-}"
+          SHA="${GITHUB_SHA::7}"
           echo "safe=${SAFE}" >> "$GITHUB_OUTPUT"
-          echo "pdf=resume-${SAFE}.pdf" >> "$GITHUB_OUTPUT"
+          echo "artifact=resume-${SAFE}.pdf" >> "$GITHUB_OUTPUT"
+          echo "key=resume-${SAFE}-${SHA}.pdf" >> "$GITHUB_OUTPUT"
 
       - name: Rename PDF
-        run: mv src/resume.pdf "${{ steps.meta.outputs.pdf }}"
+        run: mv src/resume.pdf "${{ steps.meta.outputs.artifact }}"
 
       - name: Upload to Cloudflare R2
         id: upload
@@ -55,8 +57,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           AWS_EC2_METADATA_DISABLED: "true"
         run: |
-          KEY="${{ steps.meta.outputs.safe }}.pdf"
-          aws s3 cp "${{ steps.meta.outputs.pdf }}" "s3://${R2_BUCKET}/${KEY}" \
+          KEY="${{ steps.meta.outputs.key }}"
+          aws s3 cp "${{ steps.meta.outputs.artifact }}" "s3://${R2_BUCKET}/${KEY}" \
             --endpoint-url "${R2_ENDPOINT}" \
             --content-type application/pdf
           echo "url=${BASE_URL}/${KEY}" >> "$GITHUB_OUTPUT"
