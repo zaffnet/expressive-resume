@@ -34,7 +34,7 @@ jobs:
 
       - name: Build PDF
         run: |
-          ./setup.sh
+          chmod +x setup.sh && ./setup.sh
           test -f src/resume.pdf
 
       - name: Compute branch-safe name

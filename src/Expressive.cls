@@ -14,13 +14,11 @@
 
 \LoadClass[letterpaper]{article}
 
-\RequirePackage{etex} 
 \RequirePackage[dvipsnames]{xcolor}
 \RequirePackage{fontawesome5}
 \RequirePackage{graphicx}
 \RequirePackage{tikz}
 \RequirePackage{enumitem}
-
 
 \RequirePackage{array}
 \newcolumntype{L}[1]
