@@ -34,12 +34,7 @@ jobs:
 
       - name: Build PDF
         run: |
-          docker run --rm \
-            -v "$PWD/src:/work" \
-            -w /work \
-            thubo/latexmk \
-            -xelatex \
-            resume.tex
+          ./setup.sh
           test -f src/resume.pdf
 
       - name: Compute branch-safe name
