@@ -35,16 +35,6 @@ build_with_docker() {
 
 }
 
-if command -v latexmk >/dev/null 2>&1; then
-  if build_with_local; then
-    echo "Setup complete. The PDF should be generated in the src/ directory as resume.pdf"
-    echo $ROOT_DIR
-    exit 0
-  fi
-
-  echo "Local latexmk build failed; attempting Docker fallback..." >&2
-fi
-
 
 
 if command -v docker >/dev/null 2>&1; then
