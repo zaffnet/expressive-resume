@@ -40,10 +40,18 @@ jobs:
       - name: Compute branch-safe name
         id: meta
         run: |
-          BR="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
-          SAFE="${BR//\//-}"
-          echo "safe=${SAFE}" >> "$GITHUB_OUTPUT"
-          echo "pdf=resume-${SAFE}.pdf" >> "$GITHUB_OUTPUT"
+          BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
+          SAFE="${BRANCH,,}"
+          SAFE="${SAFE//\//-}"
+          SAFE="${SAFE//[^a-z0-9._-]/-}"
+          SAFE="${SAFE##-}"
+          SAFE="${SAFE%%-}"
+          SHA="${GITHUB_SHA::8}"
+          PDF="resume-${SAFE:-build}-${SHA}.pdf"
+          echo "branch=${BRANCH}" >> "$GITHUB_OUTPUT"
+          echo "safe=${SAFE:-build}" >> "$GITHUB_OUTPUT"
+          echo "sha=${SHA}" >> "$GITHUB_OUTPUT"
+          echo "pdf=${PDF}" >> "$GITHUB_OUTPUT"
 
       - name: Rename PDF
         run: mv src/resume.pdf "${{ steps.meta.outputs.pdf }}"
@@ -55,8 +63,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           AWS_EC2_METADATA_DISABLED: "true"
         run: |
-          KEY="${{ steps.meta.outputs.safe }}.pdf"
-          aws s3 cp "${{ steps.meta.outputs.pdf }}" "s3://${R2_BUCKET}/${KEY}" \
+          KEY="${{ steps.meta.outputs.pdf }}"
+          aws s3 cp "${KEY}" "s3://${R2_BUCKET}/${KEY}" \
             --endpoint-url "${R2_ENDPOINT}" \
             --content-type application/pdf
           echo "url=${BASE_URL}/${KEY}" >> "$GITHUB_OUTPUT"
