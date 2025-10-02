@@ -23,13 +23,15 @@
     qrcode
 ]{%
 \begin{center}
-    \fontsize{35}{42}\selectfont\textsc{\commandkey{firstname}\space\commandkey{lastname}}
+    {\fontsize{35}{42}\selectfont
+    \addfontfeatures{LetterSpace=6,Kerning=Uppercase,RawFeature={+kern}}\textsc{\commandkey{firstname}\space\commandkey{lastname}}}
     % \commandkey{firstname}%
     % \ifcommandkey{middleinitial}{\space\commandkey{middleinitial}.}{}%
     % \space\commandkey{lastname}%
     \\[5pt]
     \vspace{5pt}
-\fontsize{16}{19.2}\selectfont{
+{\fontsize{16}{19.2}\selectfont
+    \addfontfeatures{LetterSpace=1.2,RawFeature={+kern}}
     \ifcommandkey{state}{\location{\ifcommandkey{city}{\commandkey{city}, }{}\commandkey{state}}}{}%
     \ifcommandkey{phone}{\headersep\phone{\commandkey{phone}}}{}%
     \ifcommandkey{email}{\headersep\email{\commandkey{email}}}{}%
