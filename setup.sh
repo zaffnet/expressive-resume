@@ -5,11 +5,12 @@ echo $ROOT_DIR
 SRC_DIR="${ROOT_DIR}/src"
 
 build_with_local() {
+
+  echo "Cleaning previous builds..."
+  (cd "${SRC_DIR}" && latexmk -f -C -xelatex resume.tex && cd ..)
+
   echo "Building the resume with local latexmk..."
   (cd "${SRC_DIR}" && latexmk -f -xelatex resume.tex && cd ..)
-
-  echo "Cleaning up auxiliary files..."
-  (cd "${SRC_DIR}" && latexmk -f -c resume.tex && cd ..)
 }
 
 build_with_docker() {
@@ -18,19 +19,20 @@ build_with_docker() {
   uid="$(id -u 2>/dev/null || echo 0)"
   gid="$(id -g 2>/dev/null || echo 0)"
 
+  echo "Cleaning previous builds..."
+  docker build -t resume-builder .
+  
   docker run --rm \
     --user "${uid}:${gid}" \
-    --workdir /data/src \
-    -v "${ROOT_DIR}":/data \
-    thubo/latexmk latexmk -C && \
-      latexmk -f -xelatex resume.tex
+    -v "${SRC_DIR}":/data \
+    resume-builder -f -C -xelatex resume.tex
 
-  echo "Cleaning up auxiliary files..."
+  echo "Building the resume with Docker..."
   docker run --rm \
     --user "${uid}:${gid}" \
-    --workdir /data/src \
-    -v "${ROOT_DIR}":/data \
-    thubo/latexmk latexmk -f -c resume.tex
+    -v "${SRC_DIR}":/data \
+    resume-builder -f -xelatex resume.tex
+
 }
 
 if command -v latexmk >/dev/null 2>&1; then
@@ -42,6 +44,8 @@ if command -v latexmk >/dev/null 2>&1; then
 
   echo "Local latexmk build failed; attempting Docker fallback..." >&2
 fi
+
+
 
 if command -v docker >/dev/null 2>&1; then
   build_with_docker
