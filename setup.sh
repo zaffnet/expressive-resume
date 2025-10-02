@@ -28,6 +28,7 @@ sudo apt-get install -y \
     texlive-fonts-extra \
     texlive-publishers \
     texlive-luatex \
+    texlive-xetex \
     biber \
     latexmk
 
@@ -37,15 +38,22 @@ sudo apt-get install -y \
 echo "Installing EB Garamond font..."
 sudo apt-get install -y fonts-ebgaramond
 
+# --- 3a. Update Font Cache ---
+# After installing new fonts, it's crucial to update the system's font cache.
+# This allows applications like XeLaTeX (via fontspec) to find and use them.
+echo "Updating font cache..."
+sudo fc-cache -fv
+
 # --- 4. Build the Resume ---
-# The final step is to compile the resume.tex file into a PDF.
-# We use latexmk with the -lualatex flag because the .tex file uses the
+# The final step is to compile the resume.tex file into a PDF using XeLaTeX.
+# We use latexmk with the -xelatex flag because the .tex file uses the
 # fontspec package, which requires either LuaLaTeX or XeLaTeX.
-# latexmk will automatically run biber and lualatex the correct
+# latexmk will automatically run biber and xelatex the correct
 # number of times to resolve all references and citations.
 echo "Building the resume..."
 cd src
-latexmk -lualatex resume.tex
-
+latexmk -xelatex resume.tex
+latexmk -c # Clean up auxiliary files
+cd ..
 # --- Done ---
 echo "Setup complete. The PDF should be generated in the src/ directory as resume.pdf"
