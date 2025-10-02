@@ -5,8 +5,8 @@
 \newcommand{\spacenormal}{0pt}
 
 
-\newcommand{\sectionfont}{\fontsize{21}{25.2}\selectfont} % Slightly bigger than normal
-\newcommand{\subsectionfont}{\fontsize{18}{21.6}\selectfont} % Slightly smaller than section
+\newcommand{\sectionfont}{\fontsize{21}{25.2}\selectfont\addfontfeatures{LetterSpace=7}} % Slightly bigger than normal with extra tracking
+\newcommand{\subsectionfont}{\fontsize{18}{21.6}\selectfont\addfontfeatures{LetterSpace=4}} % Slightly smaller than section with extra tracking
 \newcommand{\normaltextfont}{\fontsize{16.3}{19.56}\selectfont} % Base text
 
  % \AtBeginDocument{\normaltextfont}
@@ -14,7 +14,8 @@
 
 \LoadClass[letterpaper]{article}
 
-\RequirePackage{etex} 
+\RequirePackage{fontspec}
+\RequirePackage{etex}
 \RequirePackage[dvipsnames]{xcolor}
 \RequirePackage{fontawesome5}
 \RequirePackage{graphicx}
@@ -115,11 +116,11 @@
 \newcommand{\webpage}[1]{\faIcon{globe} \href{https://zafarmahmood.com}{#1}}
 
 % Experience/Achievements
-\newcommand{\equivalent}{\textnormal{\textsc{equivalent}}}
+\newcommand{\equivalent}{\textnormal{{\addfontfeatures{LetterSpace=4}\textsc{equivalent}}}}
 \newcommand{\honors}[1]{\textnormal{\emph{#1}}}
 \newcommand{\roletitle}[1]{\textbf{#1}}
-\newcommand{\tech}[1]{{{\color{Brown}{\fontseries{sb}\selectfont{#1}}}}}
-\newcommand{\tenure}[1]{\textsc{#1}}
+\newcommand{\tech}[1]{{{\color{Brown}{\fontseries{sb}\selectfont{\addfontfeatures{LetterSpace=2}#1}}}}}
+\newcommand{\tenure}[1]{{\addfontfeatures{LetterSpace=4}\textsc{#1}}}
 
 \setlist[itemize]{label=\raisebox{0.2ex}{\small$\bullet$}, leftmargin=1.5em}
 
