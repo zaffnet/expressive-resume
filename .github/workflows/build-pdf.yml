@@ -33,9 +33,11 @@ jobs:
           aws --version
 
       - name: Build PDF
-        run: |
-          ./setup.sh
-          test -f src/resume.pdf
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: resume.tex
+          working_directory: src/
+          compiler: xelatex
 
       - name: Compute branch-safe name
         id: meta
