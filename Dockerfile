@@ -1,4 +1,4 @@
-FROM ghcr.io/openai/codex-universal:latest
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -13,12 +13,4 @@ RUN apt-get update && \
         fontconfig && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-
-COPY . .
-
-RUN chmod +x ./setup.sh && ./setup.sh
-
-WORKDIR /app/src
-
-CMD ["latexmk", "-xelatex", "resume.tex"]
+WORKDIR /data

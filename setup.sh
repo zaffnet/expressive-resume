@@ -7,14 +7,7 @@ SRC_DIR="${ROOT_DIR}/src"
 
 build_with_local() {
   echo "Building the resume with local latexmk..."
-  if ! (cd "${SRC_DIR}" && latexmk -xelatex resume.tex); then
-    return 1
-  fi
-
-  if [[ ! -f "${SRC_DIR}/resume.pdf" ]]; then
-    echo "Local build did not produce src/resume.pdf" >&2
-    return 1
-  fi
+  (cd "${SRC_DIR}" && latexmk -xelatex resume.tex)
 
   echo "Cleaning up auxiliary files..."
   (cd "${SRC_DIR}" && latexmk -c resume.tex)
@@ -30,19 +23,14 @@ build_with_docker() {
     --user "${uid}:${gid}" \
     --workdir /data/src \
     -v "${ROOT_DIR}":/data \
-    thubo/latexmk -xelatex resume.tex
-
-  if [[ ! -f "${SRC_DIR}/resume.pdf" ]]; then
-    echo "Docker build did not produce src/resume.pdf" >&2
-    return 1
-  fi
+    thubo/latexmk latexmk -xelatex resume.tex
 
   echo "Cleaning up auxiliary files..."
   docker run --rm \
     --user "${uid}:${gid}" \
     --workdir /data/src \
     -v "${ROOT_DIR}":/data \
-    thubo/latexmk -c resume.tex
+    thubo/latexmk latexmk -c resume.tex
 }
 
 if command -v latexmk >/dev/null 2>&1; then
