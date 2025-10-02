@@ -24,6 +24,7 @@
 
 % Use the fontspec package for modern font management
 \usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Renderer=Harfbuzz,Scale=MatchLowercase}
 \usepackage{unicode-math} % For modern, scalable math fonts
 
 % Use TeX Live's bundled EB Garamond fonts (hyphenated file names)
@@ -34,6 +35,8 @@
   ItalicFont       = *-Italic,
   BoldFont         = *-SemiBold,
   BoldItalicFont   = *-SemiBoldItalic,
+  Ligatures        = TeX,
+  SmallCapsFeatures={LetterSpace=6},
   % Correctly define the semibold 'sb' series using FontFace
   FontFace         = {sb}{n}{Font = *-SemiBold},
   FontFace         = {sb}{it}{Font = *-SemiBoldItalic}
