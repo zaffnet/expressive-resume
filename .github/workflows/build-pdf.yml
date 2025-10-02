@@ -34,8 +34,11 @@ jobs:
 
       - name: Build PDF
         run: |
-          docker build -t expressive-resume .
-          docker run --rm -v "$PWD/src:/app/src" expressive-resume
+          docker run --rm \
+            -v "$PWD/src:/work" \
+            -w /work \
+            thubo/latexmk \
+            latexmk -xelatex resume.tex
           test -f src/resume.pdf
 
       - name: Compute branch-safe name
