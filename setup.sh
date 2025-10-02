@@ -1,51 +1,53 @@
-#!/bin/bash
-#
-# Setup script for the expressive-resume repository.
-# This script is designed to be run in a Debian-based environment
-# (like Ubuntu 24.04 or the openai/codex-universal Docker image)
-# to install all necessary dependencies for compiling the LaTeX resume.
+#!/usr/bin/env bash
 
-# --- Exit on Error ---
-set -e
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+echo $ROOT_DIR
+SRC_DIR="${ROOT_DIR}/src"
 
-# --- 1. Update Package Manager ---
-echo "Updating package lists..."
-sudo apt-get update -y
+build_with_local() {
+  echo "Building the resume with local latexmk..."
+  (cd "${SRC_DIR}" && latexmk -f -xelatex resume.tex && cd ..)
 
-# --- 2. Install TeX Live and Biber ---
-# We need a modern TeX distribution with specific packages.
-# - texlive-latex-base: Core LaTeX packages.
-# - texlive-latex-extra: Includes titlesec, xcolor, and other required packages.
-# - texlive-fonts-extra: Required for fontawesome5 icons.
-# - texlive-publishers: Often contains bibliography styles like IEEE.
-# - texlive-luatex: Required for the lualatex engine, needed for fontspec.
-# - biber: The backend for processing the bibliography as specified in resume.tex.
-# - latexmk: A tool to automate the build process.
-echo "Installing TeX Live, Biber, and Latexmk..."
-sudo apt-get install -y \
-    texlive-latex-base \
-    texlive-latex-extra \
-    texlive-fonts-extra \
-    texlive-publishers \
-    texlive-luatex \
-    biber \
-    latexmk
+  echo "Cleaning up auxiliary files..."
+  (cd "${SRC_DIR}" && latexmk -f -c resume.tex && cd ..)
+}
 
-# --- 3. Install Required System Fonts ---
-# The resume uses the EB Garamond font, which needs to be installed system-wide
-# for fontspec to find it.
-echo "Installing EB Garamond font..."
-sudo apt-get install -y fonts-ebgaramond
+build_with_docker() {
+  echo "Building the resume using Docker..."
+  local uid gid
+  uid="$(id -u 2>/dev/null || echo 0)"
+  gid="$(id -g 2>/dev/null || echo 0)"
 
-# --- 4. Build the Resume ---
-# The final step is to compile the resume.tex file into a PDF.
-# We use latexmk with the -lualatex flag because the .tex file uses the
-# fontspec package, which requires either LuaLaTeX or XeLaTeX.
-# latexmk will automatically run biber and lualatex the correct
-# number of times to resolve all references and citations.
-echo "Building the resume..."
-cd src
-latexmk -lualatex resume.tex
+  docker run --rm \
+    --user "${uid}:${gid}" \
+    --workdir /data/src \
+    -v "${ROOT_DIR}":/data \
+    thubo/latexmk latexmk -C && \
+      latexmk -f -xelatex resume.tex
 
-# --- Done ---
-echo "Setup complete. The PDF should be generated in the src/ directory as resume.pdf"
+  echo "Cleaning up auxiliary files..."
+  docker run --rm \
+    --user "${uid}:${gid}" \
+    --workdir /data/src \
+    -v "${ROOT_DIR}":/data \
+    thubo/latexmk latexmk -f -c resume.tex
+}
+
+if command -v latexmk >/dev/null 2>&1; then
+  if build_with_local; then
+    echo "Setup complete. The PDF should be generated in the src/ directory as resume.pdf"
+    echo $ROOT_DIR
+    exit 0
+  fi
+
+  echo "Local latexmk build failed; attempting Docker fallback..." >&2
+fi
+
+if command -v docker >/dev/null 2>&1; then
+  build_with_docker
+else
+  echo "Error: neither latexmk nor Docker is available." >&2
+  exit 1
+fi
+
+echo $ROOT_DIR

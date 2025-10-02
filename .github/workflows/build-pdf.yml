@@ -1,0 +1,76 @@
+name: Build PDF and Publish (Cloudflare R2)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+
+concurrency:
+  group: pdf-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    env:
+      R2_ENDPOINT: https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
+      R2_BUCKET: resume
+      BASE_URL: ${{ secrets.CDN_BASE_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install AWS CLI v2
+        run: |
+          curl -sSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o awscliv2.zip
+          unzip -q awscliv2.zip
+          sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+          aws --version
+
+      - name: Build PDF
+        run: |
+          ./setup.sh
+          test -f src/resume.pdf
+
+      - name: Compute branch-safe name
+        id: meta
+        run: |
+          BR="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
+          SAFE="${BR//\//-}"
+          echo "safe=${SAFE}" >> "$GITHUB_OUTPUT"
+          echo "pdf=resume-${SAFE}.pdf" >> "$GITHUB_OUTPUT"
+
+      - name: Rename PDF
+        run: mv src/resume.pdf "${{ steps.meta.outputs.pdf }}"
+
+      - name: Upload to Cloudflare R2
+        id: upload
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_EC2_METADATA_DISABLED: "true"
+        run: |
+          KEY="${{ steps.meta.outputs.safe }}.pdf"
+          aws s3 cp "${{ steps.meta.outputs.pdf }}" "s3://${R2_BUCKET}/${KEY}" \
+            --endpoint-url "${R2_ENDPOINT}" \
+            --content-type application/pdf
+          echo "url=${BASE_URL}/${KEY}" >> "$GITHUB_OUTPUT"
+
+      - name: Comment URL on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = `${{ toJSON(steps.upload.outputs.url) }}`
+            const body = `Built PDF: ${url}`
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body
+            })

@@ -1,17 +1,16 @@
-# Use the official OpenAI Codex Universal image as a base
-FROM openai/codex-universal:latest
+FROM ubuntu:22.04
 
-# Set the working directory inside the container
-WORKDIR /app
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Copy the entire project directory into the container
-COPY . .
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        latexmk \
+        texlive-xetex \
+        texlive-latex-extra \
+        texlive-fonts-extra \
+        texlive-bibtex-extra \
+        biber \
+        fontconfig && \
+    rm -rf /var/lib/apt/lists/*
 
-# Run the setup script to install all dependencies.
-# This is done during the image build process.
-RUN chmod +x ./setup.sh && ./setup.sh
-
-# Set the default command to generate the resume PDF.
-# This will be executed when a container is run.
-WORKDIR /app/src
-CMD ["latexmk", "-lualatex", "resume.tex"]
+WORKDIR /data

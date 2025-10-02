@@ -36,12 +36,15 @@
   Renderer=HarfBuzz,
   Kerning=On,
   % Correctly define the semibold 'sb' series using FontFace
-  FontFace         = {sb}{n}{ Font = {* SemiBold} },
-  FontFace         = {sb}{it}{ Font = {* SemiBold Italic} }
+  FontFace         = {sb}{n}{Font = *-SemiBold},
+  FontFace         = {sb}{it}{Font = *-SemiBoldItalic}
 ]
 
-% Set a matching, scalable math font to avoid size substitution warnings
-\setmathfont{Garamond-Math}
+% Set a readily available math font to avoid substitution warnings
+\setmathfont{texgyretermes-math}[
+  Path      = /usr/local/texlive/2025/texmf-dist/fonts/opentype/public/tex-gyre-math/,
+  Extension = .otf
+]
 
 \usepackage{setspace}
 \renewcommand{\baselinestretch}{1.0}
