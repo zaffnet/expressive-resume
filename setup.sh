@@ -1,17 +1,15 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 echo $ROOT_DIR
 SRC_DIR="${ROOT_DIR}/src"
 
 build_with_local() {
   echo "Building the resume with local latexmk..."
-  (cd "${SRC_DIR}" && latexmk -xelatex resume.tex && cd ..)
+  (cd "${SRC_DIR}" && latexmk -f -xelatex resume.tex && cd ..)
 
   echo "Cleaning up auxiliary files..."
-  (cd "${SRC_DIR}" && latexmk -c resume.tex && cd ..)
+  (cd "${SRC_DIR}" && latexmk -f -c resume.tex && cd ..)
 }
 
 build_with_docker() {
@@ -24,7 +22,8 @@ build_with_docker() {
     --user "${uid}:${gid}" \
     --workdir /data/src \
     -v "${ROOT_DIR}":/data \
-    thubo/latexmk latexmk -f -xelatex resume.tex
+    thubo/latexmk latexmk -C && \
+      latexmk -f -xelatex resume.tex
 
   echo "Cleaning up auxiliary files..."
   docker run --rm \
