@@ -39,9 +39,14 @@ jobs:
 
       - name: Compute branch-safe name
         id: meta
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
-          BR="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
-          SAFE="${BR//\//-}"
+          if [ -z "${BRANCH_NAME}" ]; then
+            echo "Unable to determine branch name" >&2
+            exit 1
+          fi
+          SAFE=$(printf '%s' "${BRANCH_NAME}" | tr -c 'A-Za-z0-9._-' '-')
           echo "safe=${SAFE}" >> "$GITHUB_OUTPUT"
           echo "pdf=resume-${SAFE}.pdf" >> "$GITHUB_OUTPUT"
 
@@ -55,8 +60,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           AWS_EC2_METADATA_DISABLED: "true"
         run: |
-          KEY="${{ steps.meta.outputs.safe }}.pdf"
-          aws s3 cp "${{ steps.meta.outputs.pdf }}" "s3://${R2_BUCKET}/${KEY}" \
+          KEY="${{ steps.meta.outputs.pdf }}"
+          aws s3 cp "${KEY}" "s3://${R2_BUCKET}/${KEY}" \
             --endpoint-url "${R2_ENDPOINT}" \
             --content-type application/pdf
           echo "url=${BASE_URL}/${KEY}" >> "$GITHUB_OUTPUT"
