@@ -42,8 +42,13 @@ jobs:
         run: |
           BR="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
           SAFE="${BR//\//-}"
+          SAFE="${SAFE// /-}"
+          SAFE="${SAFE//[^[:alnum:]-]/-}"
+          SHA="${GITHUB_SHA::8}"
           echo "safe=${SAFE}" >> "$GITHUB_OUTPUT"
-          echo "pdf=resume-${SAFE}.pdf" >> "$GITHUB_OUTPUT"
+          echo "sha=${SHA}" >> "$GITHUB_OUTPUT"
+          echo "pdf=resume-${SAFE}-${SHA}.pdf" >> "$GITHUB_OUTPUT"
+          echo "key=${SAFE}-${SHA}.pdf" >> "$GITHUB_OUTPUT"
 
       - name: Rename PDF
         run: mv src/resume.pdf "${{ steps.meta.outputs.pdf }}"
@@ -55,7 +60,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           AWS_EC2_METADATA_DISABLED: "true"
         run: |
-          KEY="${{ steps.meta.outputs.safe }}.pdf"
+          KEY="${{ steps.meta.outputs.key }}"
           aws s3 cp "${{ steps.meta.outputs.pdf }}" "s3://${R2_BUCKET}/${KEY}" \
             --endpoint-url "${R2_ENDPOINT}" \
             --content-type application/pdf
