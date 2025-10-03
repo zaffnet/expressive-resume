@@ -25,6 +25,14 @@
 % Use the fontspec package for modern font management
 \usepackage{fontspec}
 \usepackage{unicode-math} % For modern, scalable math fonts
+\usepackage[tracking=true,kerning=true,spacing=true]{microtype}
+
+% Improve the default font shaping behaviour to emphasise kerning and spacing
+\defaultfontfeatures{Ligatures=TeX, Scale=MatchLowercase, Kerning=On}
+
+% Apply slightly more generous tracking to small caps text (used heavily in headings)
+\SetTracking{encoding={*}, shape=sc}{40}
+\SetTracking{encoding={*}, shape={scit}}{40}
 
 % Use TeX Live's bundled EB Garamond fonts (hyphenated file names)
 \setmainfont{EBGaramond}[
