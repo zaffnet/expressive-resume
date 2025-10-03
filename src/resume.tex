@@ -26,17 +26,31 @@
 \usepackage{fontspec}
 \usepackage{unicode-math} % For modern, scalable math fonts
 
+% Consistent font defaults tuned for improved kerning and readability
+\defaultfontfeatures{
+  Ligatures = TeX,
+  Renderer  = HarfBuzz,
+  Scale     = MatchLowercase
+}
+
 % Use TeX Live's bundled EB Garamond fonts (hyphenated file names)
 \setmainfont{EBGaramond}[
-  Path             = /usr/local/texlive/2025/texmf-dist/fonts/opentype/public/ebgaramond/,
-  Extension        = .otf,
-  UprightFont      = *-Regular,
-  ItalicFont       = *-Italic,
-  BoldFont         = *-SemiBold,
-  BoldItalicFont   = *-SemiBoldItalic,
+  Path              = /usr/local/texlive/2025/texmf-dist/fonts/opentype/public/ebgaramond/,
+  Extension         = .otf,
+  UprightFont       = *-Regular,
+  ItalicFont        = *-Italic,
+  BoldFont          = *-SemiBold,
+  BoldItalicFont    = *-SemiBoldItalic,
   % Correctly define the semibold 'sb' series using FontFace
-  FontFace         = {sb}{n}{Font = *-SemiBold},
-  FontFace         = {sb}{it}{Font = *-SemiBoldItalic}
+  FontFace          = {sb}{n}{Font = *-SemiBold},
+  FontFace          = {sb}{it}{Font = *-SemiBoldItalic},
+  RawFeature        = {+kern,+liga},
+  Kerning           = Uppercase,
+  SmallCapsFeatures = {
+    LetterSpace = 5,
+    Kerning     = Uppercase,
+    RawFeature  = {+kern}
+  }
 ]
 
 % Set a readily available math font to avoid substitution warnings

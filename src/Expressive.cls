@@ -5,9 +5,20 @@
 \newcommand{\spacenormal}{0pt}
 
 
-\newcommand{\sectionfont}{\fontsize{21}{25.2}\selectfont} % Slightly bigger than normal
-\newcommand{\subsectionfont}{\fontsize{18}{21.6}\selectfont} % Slightly smaller than section
-\newcommand{\normaltextfont}{\fontsize{16.3}{19.56}\selectfont} % Base text
+\RequirePackage{fontspec}
+
+\newcommand{\sectionfont}{%
+  \fontsize{21}{25.2}\selectfont
+  \addfontfeatures{LetterSpace=3,Kerning=Uppercase,RawFeature={+kern}}
+} % Slightly bigger than normal
+\newcommand{\subsectionfont}{%
+  \fontsize{18}{21.6}\selectfont
+  \addfontfeatures{LetterSpace=1.5,Kerning=Uppercase,RawFeature={+kern}}
+} % Slightly smaller than section
+\newcommand{\normaltextfont}{%
+  \fontsize{16.3}{19.56}\selectfont
+  \addfontfeatures{RawFeature={+kern}}
+} % Base text
 
  % \AtBeginDocument{\normaltextfont}
 
