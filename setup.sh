@@ -61,9 +61,10 @@ else
   if command -v docker >/dev/null 2>&1; then
     echo "latexmk is not available, but Docker is. Using Docker."
     build_with_docker
+  else
+    echo "Neither latexmk nor Docker is available." >&2
+    exit 1
   fi
-  echo "Neither latexmk nor Docker is available." >&2
-  exit 1
 fi
 
 
