@@ -39,7 +39,7 @@ jobs:
         run: |
           chmod +x setup.sh && ./setup.sh
           # Fails the step if the resume.pdf file was not created
-          test -f src/resume.pdf
+          test -f resume.pdf
 
       - name: Compute branch-safe name
         id: meta
@@ -63,7 +63,7 @@ jobs:
 
       - name: Rename PDF
         # Rename the built file to its unique name
-        run: mv src/resume.pdf "${{ steps.meta.outputs.pdf }}"
+        run: mv resume.pdf "${{ steps.meta.outputs.pdf }}"
 
       - name: Upload to Cloudflare R2
         id: upload
