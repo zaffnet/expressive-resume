@@ -7,6 +7,8 @@ on:
     branches: [main]
 
 concurrency:
+  # The concurrency group prevents simultaneous runs for the same ref (branch/PR)
+  # and cancels older in-progress runs when a new one starts.
   group: pdf-${{ github.ref }}
   cancel-in-progress: true
 
@@ -15,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      # The PR write permission is only needed for the final step to leave a comment
       pull-requests: write
 
     env:
@@ -35,22 +38,31 @@ jobs:
       - name: Build PDF
         run: |
           chmod +x setup.sh && ./setup.sh
+          # Fails the step if the resume.pdf file was not created
           test -f src/resume.pdf
 
       - name: Compute branch-safe name
         id: meta
         run: |
+          # Use GITHUB_HEAD_REF for PRs, GITHUB_REF_NAME for pushes to branches like 'main'
           BR="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
+          # Clean up the branch name for use in the file path
           SAFE="${BR//\//-}"
           SAFE="${SAFE// /-}"
           SAFE="${SAFE//[^[:alnum:]-]/-}"
           SHA="${GITHUB_SHA::8}"
+          
+          # Outputs for later steps
           echo "safe=${SAFE}" >> "$GITHUB_OUTPUT"
           echo "sha=${SHA}" >> "$GITHUB_OUTPUT"
+          
+          # The full unique filename: e.g., resume-feature-a-b8d234f9.pdf
           echo "pdf=resume-${SAFE}-${SHA}.pdf" >> "$GITHUB_OUTPUT"
-          echo "key=${SAFE}-${SHA}.pdf" >> "$GITHUB_OUTPUT"
+          # The key used for R2 upload: e.g., feature-a-b8d234f9.pdf
+          echo "unique_key=${SAFE}-${SHA}.pdf" >> "$GITHUB_OUTPUT"
 
       - name: Rename PDF
+        # Rename the built file to its unique name
         run: mv src/resume.pdf "${{ steps.meta.outputs.pdf }}"
 
       - name: Upload to Cloudflare R2
@@ -60,19 +72,38 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           AWS_EC2_METADATA_DISABLED: "true"
         run: |
-          KEY="${{ steps.meta.outputs.key }}"
-          aws s3 cp "${{ steps.meta.outputs.pdf }}" "s3://${R2_BUCKET}/${KEY}" \
+          UNIQUE_KEY="${{ steps.meta.outputs.unique_key }}"
+          
+          # 1. Upload the unique, branch-safe file (always done for archival)
+          aws s3 cp "${{ steps.meta.outputs.pdf }}" "s3://${R2_BUCKET}/${UNIQUE_KEY}" \
             --endpoint-url "${R2_ENDPOINT}" \
             --content-type application/pdf
-          echo "url=${BASE_URL}/${KEY}" >> "$GITHUB_OUTPUT"
+
+          # 2. Conditional upload for the main branch to create a canonical 'latest' link
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            CANONICAL_KEY="zafarullah-mahmood-resume.pdf"
+            
+            # Overwrite the 'latest' file with the new build
+            aws s3 cp "${{ steps.meta.outputs.pdf }}" "s3://${R2_BUCKET}/${CANONICAL_KEY}" \
+              --endpoint-url "${R2_ENDPOINT}" \
+              --content-type application/pdf
+              
+            # Set the URL to the canonical link for the job output
+            echo "url=${BASE_URL}/${CANONICAL_KEY}" >> "$GITHUB_OUTPUT"
+          else
+            # Set the URL to the unique link for PR comments
+            echo "url=${BASE_URL}/${UNIQUE_KEY}" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Comment URL on PR
+        # Only run this step if the event was a pull request
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
-            const url = `${{ toJSON(steps.upload.outputs.url) }}`
+            const url = `${{ steps.upload.outputs.url }}`
             const body = `Built PDF: ${url}`
+            
             github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
