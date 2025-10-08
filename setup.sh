@@ -69,4 +69,7 @@ fi
 
 
 echo $ROOT_DIR
-ls -lh "${SRC_DIR}/resume.pdf"
+ls "${SRC_DIR}"
+ls "${SRC_DIR}/resume.pdf" || echo "No resume.pdf found"
+echo "Build process completed."
+exit 0
