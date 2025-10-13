@@ -120,6 +120,12 @@
 
 \newcommand{\mainBullet}{\hspace{12pt}\color{blue}\fontsize{11}{13.2}\selectfont{\ding{70}}}
 
+\newcommand{\myresumesubsection}[2]{%
+    \noindent\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
+    {\subsectionfont\bfseries #1} & {\subsectionfont\bfseries #2}\\
+  \end{tabular*}\par
+}
+
 \begin{document}
 
 % ----- Name + Contact Information -----
@@ -153,21 +159,21 @@
 
 \section{Education}
 
-\subsubsection*{\mainBullet Master of Applied Science in Computer Engineering at \tech{the University of Toronto} \hfill 2023 -- 2025}
+\myresumesubsection{\mainBullet Master of Applied Science in Computer Engineering at \tech{the University of Toronto}}{2023 -- 2025}
 \begin{itemize}[leftmargin=*, label={}]
     \item \textbf{Thesis}: A Fully Generative Counsellor Chatbot for Smoking Cessation and LLM-Based Synthetic Smokers \hspace{1pt}\textbar\hspace{1pt} \textbf{GPA}: 4.0/4.0
     \item Deployed a multi-agent therapeutic chatbot \cite{mahmood2025fullygenerativemotivationalinterviewing} on \tech{AWS ECS}, which helped smokers increase their confidence in quitting smoking by 1.7 (0-10 scale). Improved chatbot's therapeutic quality by 26\% by implementing \tech{ReAct} for counsellor behaviour selection. Reduced SLOC by $\sim$60\% by re-implementing the chatbot system using \tech{LangChain LCEL}. Gained experience in \tech{ChromaDB}.
     \item Devised a validation framework for high-fidelity persona installation. Tested the framework's viability by installing human smoker attributes into LLM-based  synthetic smoker ``doppelgängers''.
 \end{itemize}
 
-\subsubsection*{\mainBullet Bachelor of Technology in Computer Engineering at \tech{Jamia Millia Islamia, New Delhi} \hfill 2014 -- 2018}
+\myresumesubsection{\mainBullet Bachelor of Technology in Computer Engineering at \tech{Jamia Millia Islamia, New Delhi}}{2014 -- 2018}
 \begin{itemize}[leftmargin=*, label={}]
     \item \textbf{Focus}: Natural Language Processing \hspace{1pt}\textbar\hspace{1pt} \textbf{Internship}: Indian Space Research Organisation \hspace{1pt}\textbar\hspace{1pt} \textbf{CGPA: 8.2/10}
 \end{itemize}
 
 \section{Work Experience}
 
-\subsubsection*{\mainBullet Natural Language Processing (NLP) Engineer at \tech{Dialpad Canada Inc.} \hfill Apr 2019 -- Aug 2023}
+\myresumesubsection{\mainBullet Natural Language Processing (NLP) Engineer at \tech{Dialpad Canada Inc.}}{Apr 2019 -- Aug 2023}
 \begin{itemize}[leftmargin=*, label={}]
     \item Deployed a real-time Spanish-English bilingual sentiment classification model by fine-tuning an English-only model. Achieved target F1 on the Spanish testset without performance loss on original English testset. Used \tech{transformers} and \tech{spaCy}.
     \item Reduced real-time inference latency by 4\% by replacing a sequential punctuation and casing pipeline with a multi-classification-head \tech{BERT} model. Identified and fixed performance bottlenecks in model's custom tokenizer using \tech{py-spy} and \tech{scalene}.
@@ -177,7 +183,7 @@
     \item Built a \tech{Kubeflow} pipeline to automate the generation and verification of pronunciations of newly coined words (e.g., \emph{COVID-19}). The pipeline added $\sim$10,000 words in a year and helped the team beat a benchmark on pronunciation generation \cite{gautam-etal-2021-avengers}.
 \end{itemize}
 
-\subsubsection*{\mainBullet Data Scientist at \tech{Exzeo Software, India} \hfill Jun 2018 -- Mar 2019}
+\myresumesubsection{\mainBullet Data Scientist at \tech{Exzeo Software, India}}{Jun 2018 -- Mar 2019}
 \begin{itemize}[leftmargin=*, label={}]
     \item Built a text-based, omni-channel conversational agent using \tech{Google DialogFlow} to help customers file insurance claims.
 \end{itemize}
@@ -191,24 +197,24 @@
 
 \section{Projects}
 
-\subsubsection*{\href{https://www.eecg.utoronto.ca/~jayar/ece1786.2023/download/autoannomi.pdf}{{\mainBullet} AutoAnnoMI: Automating Annotations of MI Conversations using LLMs \tech{\ExternalLink}} \hfill 2023}
+\myresumesubsection{\href{https://www.eecg.utoronto.ca/~jayar/ece1786.2023/download/autoannomi.pdf}{{\mainBullet} AutoAnnoMI: Automating Annotations of MI Conversations using LLMs \tech{\ExternalLink}}}{2023}
 \begin{itemize}[leftmargin=*, label={}]
     \item Built an LLM-based tool to label utterances in counselling conversations. Incorporated chain-of-thought reasoning and few-shot examples leading to a $\sim$12\% accuracy improvement over baseline.
 \end{itemize}
 
-\subsubsection*{\href{https://zaffnet.github.io/batch-normalization}{{\mainBullet} Benchmarking Batch Renormalization \tech{\ExternalLink}} \hfill 2017}
+\myresumesubsection{\href{https://zaffnet.github.io/batch-normalization}{{\mainBullet} Benchmarking Batch Renormalization \tech{\ExternalLink}}}{2017}
 \begin{itemize}[leftmargin=*, label={}]
     \item Implemented \texttt{BatchReNorm1d} module in \tech{PyTorch} and benchmarked its performance on image recognition datasets.
 \end{itemize}
 
 \section{Awards}
 
-\subsubsection*{{\mainBullet} Edward S. Rogers Sr. Graduate Scholarship, University of Toronto \hfill 2024}
+\myresumesubsection{{\mainBullet} Edward S. Rogers Sr. Graduate Scholarship, University of Toronto}{2024}
 \begin{itemize}[leftmargin=*, label={}]
     \item Received CAD 20,000 in recognition of outstanding academic accomplishments during Master's studies.
 \end{itemize}
 
-\subsubsection*{\href{https://www.kaggle.com/c/donorschoose-application-screening/discussion/55396}{{\mainBullet} Best Kernel Award, Kaggle} \hfill 2018}
+\myresumesubsection{\href{https://www.kaggle.com/c/donorschoose-application-screening/discussion/55396}{{\mainBullet} Best Kernel Award, Kaggle}}{2018}
 \begin{itemize}[leftmargin=*, label={}]
     \item \href{https://www.kaggle.com/c/donorschoose-application-screening/discussion/55396}{Won Best Kernel Award among 80 kernels in DonorsChoose.org Application Screening Challenge.}
 \end{itemize}
