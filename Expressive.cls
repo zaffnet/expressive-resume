@@ -127,7 +127,7 @@
     \setlength{\parskip}{0pt}
     \setlength{\parsep}{0pt}
     \setlength{\topsep}{0pt}
-    \begin{itemize}[leftmargin=1.4em]
+    \begin{itemize}[leftmargin=0.7em]
       \item \setlength{\baselineskip}{0.92\baselineskip} 
       #1
     \end{itemize}
@@ -159,10 +159,24 @@
 
 
 \newcommand{\role}[4]{%
-
- \noindent\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
-    {\subsectionfont\bfseries\selectfont{#1}\subsectionfont\bfseries\selectfont{#2}} & {\subsectionfont\bfseries #3}\\
-  \end{tabular*}\par
+  \noindent
+  % Box 1: Left-aligned. 
+  % \rlap prints this box but makes it take up 0 width,
+  % so the cursor stays at the left margin.
+  \rlap{\makebox[\linewidth][l]{{\subsectionfont\bfseries\selectfont{#1}}}}%
+  %
+  % Box 2: Center-aligned.
+  % This is also in an \rlap. It prints #2 at the exact
+  % center of the page. The cursor stays at the left margin.
+  \rlap{\makebox[\linewidth][c]{{\subsectionfont\bfseries\selectfont{#2}}}}%
+  %
+  % Box 3: Right-aligned.
+  % This is the final box, not in an \rlap. It prints #3
+  % at the right margin and properly moves the cursor
+  % to the next line.
+  \makebox[\linewidth][r]{{\subsectionfont\bfseries\selectfont{#3}}}\par
+  %
+  % The description text below
   \vspace{0.3em}#4 \vspace{5pt}
 }
 

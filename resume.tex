@@ -143,32 +143,34 @@
 \vspace{-5pt}
 \section{Skills}
 \achievementSkill{
-\tech{Technical}: Python (Fluent), C/C++ (Familiar), JavaScript (Prior experience), Flask, Sanic, SQLAlchemy, Alembic, Angular
+\tech{Prgramming Languages}: Python (Fluent), C/C++ (Familiar), JavaScript (Prior experience)
 }\vspace{-6pt}
 \achievementSkill{
-\tech{Deep Learning \& NLP}: PyTorch, NVIDIA NeMo, HuggingFace (transformers, PEFT), spaCy
+\tech{AI / ML Frameworks}: PyTorch, Keras, HuggingFace (transformers, PEFT), spaCy, LangGraph, Flask, Sanic, SQLAlchemy
+}\vspace{-6pt}
+% \achievementSkill{
+% \tech{Generative AI}: RAG Evaluation (RAGAs), Model Serving (vLLM)
+% }\vspace{-6pt}
+\achievementSkill{
+\tech{MLOps \& Cloud}: Docker, Kubernetes, Elastic Container Services, Kubeflow, AWS, GCP, Vertex AI
 }\vspace{-6pt}
 \achievementSkill{
-\tech{Generative AI}: LangChain, LangGraph, LlamaIndex, RAG Evaluation (RAGAs), Model Serving (vLLM)
-}\vspace{-6pt}
-\achievementSkill{
-\tech{MLOps \& Cloud}: Docker, Kubernetes, Elastic Container Services, Kubeflow, AWS (Bedrock, SageMaker), GCP (Vertex AI)
-}\vspace{-6pt}
-\achievementSkill{
-\tech{Databases \& Vector Stores}: BigQuery, PostgreSQL (pgvector), Firestore, Redis, ChromaDB, FAISS
+\tech{Databases \& Vector Stores}: BigQuery, PostgreSQL, Firestore, Redis, ChromaDB
 }\vspace{-6pt}
     \vspace{5pt}
 
 \section{Education}
 
 \experience{
-    \role{{\mainBullet} Master of Applied Science in Computer Engineering at \tech{the University of Toronto}}{}{2023 -- 2025}{
+    
+    \role{MASc Computer Engineering}{University of Toronto}
+    {May 2023 -- Jun 2025}{
         \achievement{
-            \textbf{Thesis}: A Fully Generative Counsellor Chatbot for Smoking Cessation and LLM-Based Synthetic Smokers \hspace{1pt}\textbar\hspace{1pt} \textbf{GPA}: 4.0/4.0
-        }
+            \textbf{Thesis}: \href{https://files.zafarmahmood.com/thesis.pdf}{A Fully Generative Counsellor Chatbot for Smoking Cessation and LLM-Based Synthetic Smokers} \hspace{1pt}\textbar\hspace{1pt}  {\href{https://files.zafarmahmood.com/TRWOU2SP-redacted.pdf}{\textbf{GPA}: 4.0/4.0 \tech{\ExternalLink}}
+        }}
         
         \achievement{
-            Deployed a multi-agent therapeutic chatbot \cite{mahmood2025fullygenerativemotivationalinterviewing} on \tech{AWS ECS}, which helped smokers increase their confidence in quitting smoking by 1.7 (0-10 scale). Improved chatbot's therapeutic quality by 26\% by implementing \tech{ReAct} for counsellor behaviour selection. Reduced SLOC by $\sim$60\% by re-implementing the chatbot system using \tech{LangChain LCEL}. Gained experience in \tech{ChromaDB}.
+            Deployed a multi-agent therapeutic chatbot \cite{mahmood2025fullygenerativemotivationalinterviewing} on \tech{AWS ECS}, which helped smokers increase their confidence in quitting smoking by 1.7 (0-10 scale). Improved chatbot's therapeutic quality by 26\% by implementing \tech{ReAct} for counsellor behaviour selection.
         }
         \achievement{
             Devised a validation framework for high-fidelity persona installation. Tested the framework's viability by installing human smoker attributes into LLM-based  synthetic smoker ``doppelgängers''.
@@ -176,28 +178,29 @@
     }
 }
 
-\experience{
-    \role{{\mainBullet} Bachelor of Technology in Computer Engineering at \tech{Jamia Millia Islamia, New Delhi}}{}{2014 -- 2018}{
-        \achievement{
-           \textbf{Focus}: Natural Language Processing \hspace{1pt}\textbar\hspace{1pt} \textbf{Internship}: Indian Space Research Organisation \hspace{1pt}\textbar\hspace{1pt} \textbf{CGPA: 8.2/10} 
-        }
-    }
-}
+% \experience{
+%     \role{{\mainBullet} Bachelor of Technology in Computer Engineering at \tech{Jamia Millia Islamia, New Delhi}}{}{2014 -- 2018}{
+%         \achievement{
+%            \textbf{Focus}: Natural Language Processing \hspace{1pt}\textbar\hspace{1pt} \textbf{Internship}: Indian Space Research Organisation \hspace{1pt}\textbar\hspace{1pt} \textbf{CGPA: 8.2/10} 
+%         }
+%     }
+% }
 
 \section{Work Experience}
 
 \experience{
-    \role{{\mainBullet} Machine Learning Engineer (Contract) at \tech{Pinterest}}{}{June 2025 -- Present}{     
+    \role{ML Engineer (Contract)}{Pinterest / Innodata Inc.}{Jun 2025 -- Present}{     
         
         \achievement{
-            Improved a key search relevance metric for Women's Fashion business vertical by providing quality training data from an LLM-as-a-Judge to the recommendation model.
+            Currently working on improving hybrid search relevance for Women's Fashion business vertical. Responsibilities include context engineering, automated prompt fine tuning, and automating data labeling workflows using LLM-as-a-Judge.
         }
     }
 }
+\vspace{10pt}
 
 
 \experience{
-    \role{{\mainBullet} Natural Language Processing (NLP) Engineer at \tech{Dialpad Canada Inc.}}{}{Apr 2019 -- Aug 2023}{     
+    \role{NLP Engineer}{Dialpad Canada Inc.}{Apr 2019 -- Apr 2023}{     
         
         \achievement{
             Deployed a real-time Spanish-English bilingual sentiment classification model by fine-tuning an English-only model. Achieved target F1 on the Spanish testset without performance loss on original English testset. Used \tech{transformers} and \tech{spaCy}.
@@ -211,7 +214,7 @@
             Used \tech{Sanic} and \tech{PostgreSQL} for the backend, connected with cloud data sources and sinks, including \tech{BigQuery} and \tech{Cloud Storage} and deployed the application on \tech{Google Kubernetes Engine Deployment}.
         }
         \achievement{
-            Built a tool to create synthetic speech data from a list of \emph{keywords}: used \tech{Beautiful Soup} for web scraping, \tech{spaCy} for named entity recognition and sentence creation, and \tech{Coqui TTS} to generate speech from sentences. The synthetic dataset was used to train a keyword boosting algorithm \cite{li2023ngramboostingimprovingcontextual} and helped improve keyword recognition accuracy on a real test set by 26\% relative.
+            Developed a tool to create synthetic speech data from a list of \emph{keywords}: used \tech{Beautiful Soup} for web scraping, \tech{spaCy} for named entity recognition and sentence creation, and \tech{Coqui TTS} to generate speech from sentences. The synthetic dataset was used to train a keyword boosting algorithm \cite{li2023ngramboostingimprovingcontextual} and helped improve keyword recognition accuracy on a real test set by 26\% relative.
         }
         
         \achievement{
@@ -221,11 +224,12 @@
         }
     }
 }
+\vspace{10pt}
 
 \experience{
-    \role{{\mainBullet} Data Scientist at \tech{Exzeo Software, India}}{}{Jun 2018 -- Mar 2019}{
+    \role{Data Scientist}{                          Exzeo Software Pvt. Ltd.                 }{Jun 2018 -- Mar 2019}{
         \achievement{
-        Built a text-based, omni-channel conversational agent using \tech{Google DialogFlow} to help customers file insurance claims.
+        Designed a text-based, omni-channel conversational agent using \tech{Google DialogFlow} to help customers file insurance claims.
         }
         
     }
@@ -239,25 +243,25 @@
 \vspace{0.27em}
 
 \section{Projects}
-    \project{\href{https://www.eecg.utoronto.ca/~jayar/ece1786.2023/download/autoannomi.pdf}{{\mainBullet} AutoAnnoMI: Automating Annotations of MI Conversations using LLMs \tech{\ExternalLink}}}
+    \project{\href{https://www.eecg.utoronto.ca/~jayar/ece1786.2023/download/autoannomi.pdf}{AutoAnnoMI: Automating Annotations of MI Conversations using LLMs \tech{\ExternalLink}}}
     {2023}
     {\achievement{Built an LLM-based tool to label utterances in counselling conversations. Incorporated chain-of-thought reasoning and few-shot examples leading to a $\sim$12\% accuracy improvement over baseline.}
     }
     
     \project
-    {\href{https://zaffnet.github.io/batch-normalization}{{\mainBullet} Benchmarking Batch Renormalization \tech{\ExternalLink}}}{2017}
+    {\href{https://zaffnet.github.io/batch-normalization}{Benchmarking Batch Renormalization \tech{\ExternalLink}}}{2017}
     {\achievement{Implemented \texttt{BatchReNorm1d} module in \tech{PyTorch} and benchmarked its performance on image recognition datasets.}}
 
 \section{Awards}
 
 \project
-{{\mainBullet} Edward S. Rogers Sr. Graduate Scholarship, University of Toronto}{2024}
+{Edward S. Rogers Sr. Graduate Scholarship, University of Toronto}{2024}
 {    \achievement{Received CAD 20,000 in recognition of outstanding academic accomplishments during Master's studies. }
 }
 
 
 \project
-    {\href{https://www.kaggle.com/c/donorschoose-application-screening/discussion/55396}{{\mainBullet} Best Kernel Award, Kaggle}}{2018}
+    {\href{https://www.kaggle.com/c/donorschoose-application-screening/discussion/55396}{Best Kernel Award, Kaggle}}{2018}
         {\achievement{\href{https://www.kaggle.com/c/donorschoose-application-screening/discussion/55396}{Won Best Kernel Award among 80 kernels in DonorsChoose.org Application Screening Challenge.}}
     }
 
