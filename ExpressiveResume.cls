@@ -5,7 +5,7 @@
 
 \LoadClass{Expressive}
 
-\RequirePackage[paperwidth=14in, paperheight=20in, margin=1in]{geometry}
+\RequirePackage[paperwidth=14in, paperheight=20.5in, margin=0.9in]{geometry}
 \pagestyle{empty}
 
 \newcommand{\headersep}{\hspace{25pt}}
