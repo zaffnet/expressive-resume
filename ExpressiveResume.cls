@@ -24,9 +24,6 @@
 ]{%
 \begin{center}
     \fontsize{35}{42}\selectfont\textsc{\commandkey{firstname}\space\commandkey{lastname}}
-    % \commandkey{firstname}%
-    % \ifcommandkey{middleinitial}{\space\commandkey{middleinitial}.}{}%
-    % \space\commandkey{lastname}%
     \\[5pt]
     \vspace{5pt}
 \fontsize{16}{19.2}\selectfont{
@@ -43,7 +40,6 @@
             at (current page.north east)
             {\includegraphics[width=.1\linewidth]{\commandkey{qrcode}}};
         \end{tikzpicture}
-         % <--- MOVED TO HERE
     }{}%
 
 } % End of \noindent\normaltextfont group
@@ -60,6 +56,3 @@
 \newcommand{\summary}[1]{\tagline{Summary}{#1}}
 \newcommand{\objective}[1]{\tagline{Objective}{#1}}
 
-
-
-% \pagenumbering{arabic}

@@ -4,24 +4,6 @@
 \usepackage[skins]{tcolorbox}
 \usepackage{pifont}
 
-% \usepackage{background}
-% \backgroundsetup{%
-%   scale=1, angle=0, opacity=1,
-%   contents={%
-%     \begin{tikzpicture}[remember picture, overlay]
-%       \pgfmathsetmacro{\xmax}{8.5}
-%       \pgfmathsetmacro{\ymax}{11}
-%       \foreach \x in {0,0.05,...,8.5} {
-%         \draw[gray!30, thin] ([xshift=\x in]current page.south west) -- ([xshift=\x in]current page.north west);
-%       }
-%       \foreach \y in {0,0.05,...,13} {
-%         \draw[gray!30, thin] ([yshift=\y in]current page.south west) -- ([yshift=\y in]current page.south east);
-%       }
-%     \end{tikzpicture}
-%   }
-% }
-% \usepackage{showframe}
-
 % Use the fontspec package for modern font management
 \usepackage{fontspec}
 \usepackage{unicode-math} % For modern, scalable math fonts
@@ -93,21 +75,18 @@
   \usebibmacro{begentry}%
   \iffieldundef{url}
     {%
-      %
-\printfield{title}\addperiod\space
+      \printfield{title}\addperiod\space
       \space\printfield{booktitle}\addcomma\space
       \printfield{year}\addperiod
     }{%
       \href{\thefield{url}}{%
         \parbox{\linewidth}{%
-          % \printnames{author}\addperiod\space
           \printfield{title}\addperiod\space
           \space\printfield{booktitle}\addcomma\space
           \printfield{year}\addperiod\space \tech{\ExternalLink}
         }%
       }%
     }%
-  % \usebibmacro{finentry}%
 }
 
 \hypersetup{
@@ -115,8 +94,7 @@
     pdfauthor={Zafarullah Mahmood},
     pdfcreator={Zafarullah Mahmood},
     pdfsubject={Resume for Natural Language Processing Engineer, AI Researcher · Machine Learning Engineer, Software Engineer and Data Scientist Positions},
-    pdfkeywords={natural language processing, machine learning, large language model, transformer architecture, generative artificial intelligence, retrieval augmented generation, parameter efficient fine tuning, reinforcement learning from human feedback, huggingface transformer, openai application programming interface, langchain framework, llamaindex framework, haystack framework, chatbot development, dialogue system, intent matching, fallback mechanism, text classification, sentiment analysis, speech recognition, pronunciation modeling, grapheme to phoneme modeling, text preprocessing, text completion, contextual biasing, decoder probability adjustment, dynamic matching, motivational interviewing, automatic annotation, punctuation restoration, casing restoration, de-anonymization, language model training, inference optimization, data ingestion, retention policy, benchmarking pipeline, model deployment, container orchestration, kubernetes orchestration, docker containerization, kubeflow pipeline, amazon web services, redis database, postgresql database, google firestore, python programming, pytorch framework, scikit learn library, keras framework, fastai library, spacy library, flair library, nemo toolkit, dspython framework, bilingual support, customer service analysis, insurance assessment, report generation, data science, mathematical modeling, algorithmic fairness, batch normalization, batch renormalization, corpus pruning, tree data structure, hash table, computer engineering, c plus plus programming, c programming, sanic, angular, postgresql, pytest, github actions, circleci, latex, acl, emnlp, neurips, camh, centre for addiction and mental Health, ai for health, ai for mental health, ai engineer, ml engineer, research engineer, llm, gcp, rag, information retrieval, supervised learning, prompt engineering, optuna, active learning, backend engineering, knowledge graph, few-shot learning, semantic search, question answering, entity linking, nosql, elastic container service, pinecone, asyncio, named entity recognition, automatic speech recognition, conversational ai, semi-supervised learning, model evaluation, zero-shot learning, sigmorphon, hyperopt, mypy, computational linguistics, summarization, unsupervised learning, sql, cloud engineering, faiss, google cloud platform, milvus, vector database, virtual assistant, software engineering, topic modeling, weaviate, icassp, centre for addiction and mental health, multi-agent system, information extraction
-}
+    pdfkeywords={NLP, machine learning, AI, software engineer, resume}
 }
 
 
@@ -132,7 +110,6 @@
     phone=+1 (437) 223-7536,
     linkedin=zaffnet,
     github=zaffnet,
-    % kaggle=fizzbuzz,
     webpage=zafarmahmood.com,
     city=Toronto,
     state=ON,
@@ -143,14 +120,11 @@
 \vspace{-5pt}
 \section{Skills}
 \achievementSkill{
-\tech{Prgramming Languages}: Python (Fluent), C/C++ (Familiar), JavaScript (Prior experience)
+\tech{Programming Languages}: Python (Fluent), C/C++ (Familiar), JavaScript (Prior experience)
 }\vspace{-6pt}
 \achievementSkill{
 \tech{AI / ML Frameworks}: PyTorch, Keras, HuggingFace (transformers, PEFT), spaCy, LangGraph, Flask, Sanic, SQLAlchemy
 }\vspace{-6pt}
-% \achievementSkill{
-% \tech{Generative AI}: RAG Evaluation (RAGAs), Model Serving (vLLM)
-% }\vspace{-6pt}
 \achievementSkill{
 \tech{MLOps \& Cloud}: Docker, Kubernetes, Elastic Container Services, Kubeflow, AWS, GCP, Vertex AI
 }\vspace{-6pt}
@@ -178,14 +152,6 @@
     }
 }
 
-% \experience{
-%     \role{{\mainBullet} Bachelor of Technology in Computer Engineering at \tech{Jamia Millia Islamia, New Delhi}}{}{2014 -- 2018}{
-%         \achievement{
-%            \textbf{Focus}: Natural Language Processing \hspace{1pt}\textbar\hspace{1pt} \textbf{Internship}: Indian Space Research Organisation \hspace{1pt}\textbar\hspace{1pt} \textbf{CGPA: 8.2/10} 
-%         }
-%     }
-% }
-
 \section{Work Experience}
 
 \experience{
@@ -199,7 +165,7 @@
 \vspace{10pt}
 
 \experience{
-    \role{ML Engineer (Contract)}{Pinterest / Innodata Inc.}{Jun 2025 -- Dec 2025}{     
+    \role{ML Engineer}{Pinterest / Innodata Inc.}{Jun 2025 -- Dec 2025}{     
         
         \achievement{
           Worked on improving hybrid search relevance for Women's Fashion business vertical. Responsibilities included context engineering, prompt fine tuning, and automating data labeling workflows using LLM-as-a-Judge.

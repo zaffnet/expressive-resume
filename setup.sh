@@ -4,21 +4,20 @@
 set -e
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-echo $ROOT_DIR
 SRC_DIR="${ROOT_DIR}"
 
 build_with_local() {
 
-  echo "================ building with local latexmk ======================"
+  echo "================ [local] cleaning ======================"
   echo "Cleaning previous builds..."
   (cd "${SRC_DIR}" && latexmk -f -C -xelatex resume.tex && cd ..)
 
-  echo "================ building with local latexmk ======================"
+  echo "================ [local] compiling ======================"
   echo "Building the resume with local latexmk..."
   (cd "${SRC_DIR}" && latexmk -f -xelatex resume.tex && cd ..)
 
-  echo "================ building with local latexmk ======================"
-  echo "Cleaning all build files except resume.pdf..."
+  echo "================ [local] tidying ======================"
+  echo "Cleaning build artifacts..."
   (cd "${SRC_DIR}" && latexmk -c -dvi- -ps- -pdf- resume.tex && cd ..)
 }
 
@@ -68,8 +67,5 @@ else
 fi
 
 
-echo $ROOT_DIR
-ls "${SRC_DIR}"
-ls "${SRC_DIR}/resume.pdf" || echo "No resume.pdf found"
 echo "Build process completed."
 exit 0

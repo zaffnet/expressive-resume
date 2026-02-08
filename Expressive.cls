@@ -1,15 +1,10 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{Expressive}[2024/08/10 Base Class for Expressive Resumes/Cover Letters]
 
-\newcommand{\spacesmall}{0pt}
-\newcommand{\spacenormal}{0pt}
-
-
 \newcommand{\sectionfont}{\fontsize{21}{25.2}\selectfont} % Slightly bigger than normal
 \newcommand{\subsectionfont}{\fontsize{18}{21.6}\selectfont} % Slightly smaller than section
 \newcommand{\normaltextfont}{\fontsize{16.3}{19.56}\selectfont} % Base text
 
- % \AtBeginDocument{\normaltextfont}
 
 
 \LoadClass[letterpaper]{article}
@@ -42,7 +37,6 @@
 }
 
 
-\RequirePackage{enumitem}
 \setlist{nosep,topsep=1.8pt, partopsep=0pt, parsep=0pt, itemsep=0pt,leftmargin=13pt}
 
 
@@ -71,8 +65,8 @@
 []
 \titlespacing{\subsection}
 {0pt}
-{\spacesmall}
-{\spacetiny}  % slightly reduced after-spacing
+{0pt}
+{0pt}
 [0pt]
 
 
@@ -110,7 +104,7 @@
 
 \newcommand{\kaggle}[1]{\faIcon{kaggle} \href{https://www.kaggle.com/#1/code/}{#1}}
 
-\newcommand{\webpage}[1]{\faIcon{globe} \href{https://zafarmahmood.com}{#1}}
+\newcommand{\webpage}[1]{\faIcon{globe} \href{https://#1}{#1}}
 
 % Experience/Achievements
 \newcommand{\equivalent}{\textnormal{\textsc{equivalent}}}
@@ -198,5 +192,3 @@
     #1
 }
 
-
-% \pagenumbering{arabic}

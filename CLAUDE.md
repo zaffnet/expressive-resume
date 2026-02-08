@@ -22,7 +22,7 @@ The build requires XeLaTeX (for `fontspec`/OpenType fonts) and Biber (for biblio
 
 `setup.sh` auto-selects local vs Docker. The Docker path builds the `resume-builder` image from the `Dockerfile` (based on `thubo/latexmk`) which installs EB Garamond and TeX Gyre Math fonts into the TeX Live tree.
 
-The core compile command (used by CI and AGENTS.md) is:
+The core compile command (used by CI) is:
 ```bash
 latexmk -xelatex resume.tex
 ```
